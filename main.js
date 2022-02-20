@@ -6,7 +6,7 @@ const app = Vue.createApp({
       description: "Animal printed pair of socks",
       image: "../assets/images/socks_green.jpg",
       url: "https://www.happysocks.com/jp/",
-      inventory: 100,
+      inventory: 0,
       details: ["50% cotton", "30% wool", "20% polyester"],
       variants: [
         { id: 2234, color: "green", image: "../assets/images/socks_green.jpg" },

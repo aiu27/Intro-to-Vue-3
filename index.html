@@ -18,7 +18,9 @@
         <div class="product-container">
           <div class="product-image">
             <!-- v-bind: Dynamically bind an attribute to an expression -->
-            <a :href="url" target="_blank"><img :src="image" /></a>
+            <a :href="url" target="_blank"
+              ><img :src="image" :class="{ 'out-of-stock-img': inventory<=0 }"
+            /></a>
           </div>
           <div class="product-info">
             <h1>{{ product }}</h1>
@@ -33,12 +35,19 @@
               v-for="variant in variants"
               :key="variant.id"
               @mouseover="updateImage(variant.image)"
-            >
-              {{ variant.color }}
-            </div>
+              class="color-circle"
+              :style="{ backgroundColor: variant.color }"
+            ></div>
             <!-- code challenge -->
             <div v-for="(size, index) in sizes" key="index">{{ size }}</div>
-            <button class="button" @click="addToCart">Add to Cart</button>
+            <button
+              class="button"
+              :class="{ disabledButton: inventory<=0 }"
+              :disabled="inventory<=0"
+              @click="addToCart"
+            >
+              Add to Cart
+            </button>
             <!-- code challenge -->
             <button class="button" @click="removeFromCart">Remove Item</button>
           </div>
