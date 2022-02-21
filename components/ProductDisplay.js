@@ -25,7 +25,9 @@ app.component("product-display", {
         <p>Shipping:  {{ shipping}}</p>
 
         <p>{{ description }}</p>
-        <product-details :details="details"></product-details>
+        <ul>
+          <li v-for="detail in details">{{ detail }}</li>
+        </ul>
         <div
           v-for="(variant, index) in variants"
           :key="variant.id"
@@ -33,6 +35,8 @@ app.component("product-display", {
           class="color-circle"
           :style="{ backgroundColor: variant.color }"
         ></div>
+        <!-- code challenge -->
+        <div v-for="(size, index) in sizes" key="index">{{ size }}</div>
         <button
           class="button"
           :class="{ disabledButton: inventory<=0 }"
@@ -41,8 +45,7 @@ app.component("product-display", {
         >
           Add to Cart
         </button>
-        <!-- code challenge -->
-        <button class="button" @click="removeFromCart">Remove Item</button>
+        <button class="button" :class="{disabledButton: inventory <=0 }" :disabled="inventory<=0"  @click="removeFromCart">Remove Item</button>
       </div>
     </div>
   </div>
@@ -69,16 +72,16 @@ app.component("product-display", {
           quantity: 0,
         },
       ],
+      //code challenge
+      sizes: [22, 23, 24, 25],
     };
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].id);
     },
     removeFromCart() {
-      if (this.cart >= 1) {
-        this.cart -= 1;
-      }
+      this.$emit("remove-from-cart", this.variants[this.selectedVariant].id);
     },
     updateVariant(index) {
       this.selectedVariant = index;
