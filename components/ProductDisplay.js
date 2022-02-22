@@ -48,6 +48,8 @@ app.component("product-display", {
         <button class="button" :class="{disabledButton: inventory <=0 }" :disabled="inventory<=0"  @click="removeFromCart">Remove Item</button>
       </div>
     </div>
+    <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
   </div>
   `,
   data() {
@@ -72,6 +74,7 @@ app.component("product-display", {
           quantity: 0,
         },
       ],
+      reviews: [],
       //code challenge
       sizes: [22, 23, 24, 25],
     };
@@ -85,6 +88,9 @@ app.component("product-display", {
     },
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+    addReview(review) {
+      this.reviews.push(review);
     },
   },
   computed: {
